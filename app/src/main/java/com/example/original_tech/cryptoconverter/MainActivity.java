@@ -429,19 +429,4 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
         }
         return exchange;
     }
-    public void updateAllData() {
-        /*for (int i=0; i < exchangeId.size(); i++) {
-            Uri currencyUri = ContentUris.withAppendedId(CurrencyEntry.CONTENT_URI, exchangeId.get(i));
-            String[] projection = {CurrencyEntry.CRY_CURRENCY,
-                    CurrencyEntry.CURRENCY};
-            Cursor cursor = getContentResolver().query
-                    (currencyUri,
-                            projection, null, null,
-                            null);
-            cursor.moveToPosition(exchangeId.get(i));
-            updateDataBase("BTC", "USD");
-            cursor.close();
-        }*/
-        updateDataBase("BTC", "USD");
-    }
 }
