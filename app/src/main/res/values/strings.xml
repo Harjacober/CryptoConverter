@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CryptoConverter</string>
+    <string name="intro_message">Please Check Your Internet Connection</string>
+    <string name="title_in_cca">CRY - CUR Converter</string>
+    <string name="your_conversion_result_shows_here">Your Conversion Result\n\t\t Shows Here!</string>
+    <string name="title_ac">CREATE A CONVERTER CARD</string>
+    <string name="create">CREATE</string>
+    <string name="supplier">Supplier</string>
+    <string name="time">Time</string>
+    <string name="vol_sometext">Vol: sometext</string>
+    <string name="price_per">$ Price(per)</string>
+    <string name="cry_cur">CRY - CUR</string>
+</resources>
