@@ -10,4 +10,7 @@
     <string name="vol_sometext">Vol: sometext</string>
     <string name="price_per">$ Price(per)</string>
     <string name="cry_cur">CRY - CUR</string>
+    <string name="refresh">Refresh</string>
+    <string name="remove_all">Remove all</string>
+    <string name="reload">Reload</string>
 </resources>

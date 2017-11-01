@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Refresh"
+        android:title="@string/refresh"
         app:showAsAction="never"
         android:id="@+id/refresh"/>
-    <item android:title="Reload"
-        app:showAsAction="always"
+    <item android:title="@string/reload"
+        app:showAsAction="ifRoom"
         android:id="@+id/reload"
         android:icon="@drawable/ic_action_rotate_right"/>
+    <item
+        android:title="@string/remove_all"
+        app:showAsAction="never"
+        android:id="@+id/delete_all"/>
 </menu>

@@ -56,12 +56,9 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
     private CryptoAdapter cryptoAdapter;
     private String cryptoCurrencySelected;
     private String currencySelected;
-    private RecyclerView.LayoutManager mLayoutManager;
     private ProgressBar mLoadIndicator;
-    private RecyclerView mRecyclerView;
     private String[] mcryptoCurrency;
     private String[] mcurrency;
-    private String processeCurrency;
     private String processedLastMarket="";
     private String processedLastUpdate="";
     private String processedPriceRate="";
@@ -100,12 +97,27 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
 
         cards=new ArrayList<>();
         mLoadIndicator = ((ProgressBar)findViewById(R.id.cc_loading_indicator));
-        mRecyclerView = ((RecyclerView)findViewById(R.id.recycler_view));
+        RecyclerView mRecyclerView = ((RecyclerView) findViewById(R.id.recycler_view));
         cryptoAdapter = new CryptoAdapter(cards, this, this);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(cryptoAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position=viewHolder.getAdapterPosition();
+              cards.remove(position);
+                cryptoAdapter.updateAdapter(cards);
+            }
+        }).attachToRecyclerView(mRecyclerView);
 
         crycurrencyLogo=(ImageView) findViewById(R.id.crypto_currency_logo);
         currencyLogo=(ImageView) findViewById(R.id.currency_logo);
@@ -115,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
         try {
             getData();
         } catch (JSONException e) {
+            Toast.makeText(this,"Failed to load Cards",Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -166,6 +179,18 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
                 }catch (Exception e){
                 }
             }
+        }
+        else if (id==R.id.delete_all){
+            ContentValues values = new ContentValues();
+            values.put(CurrencyEntry.PRICE_RATE,"");
+            values.put(CurrencyEntry.VOLUME, "");
+            values.put(CurrencyEntry.LAST_MARKET, "");
+            values.put(CurrencyEntry.LAST_UPDATE, "");
+            getContentResolver().update(CurrencyEntry.CONTENT_URI, values,
+                    null,
+                    null);
+            cards.clear();
+            cryptoAdapter.updateAdapter(cards);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -257,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
         String lastmarket = curObject.getString("LASTMARKET");
         String changepct24HOUR = curObject.getString("CHANGEPCT24HOUR");
         processedPriceRate = (price + "(" + changepct24HOUR + ")");
-        processeCurrency = (cryptoCurrencySelected + " - " +currencySelected);
         processedVolume = (volume24HOUR);
         processedLastMarket = lastmarket;
         processedLastUpdate = lastupdate;
@@ -353,8 +377,6 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
                     }
                     cards.add(pob);
                     cryptoAdapter.updateAdapter(cards);
-                    Log.i("aaaaaaaaa",cursor.getString(cursor.getColumnIndex(CurrencyEntry.LAST_MARKET)));
-
                 }
                 cursor.moveToNext();
             }
@@ -374,7 +396,6 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
     public void onListItemClick(int clickedItemIndex, String price, String currency) {
         String crySymbol=""+currency.charAt(0)+currency.charAt(1)+currency.charAt(2);
         String crySymbol2=""+currency.charAt(6)+currency.charAt(7)+currency.charAt(8);
-        Log.i("kkkkk",String.valueOf(returnExchange(price)));
         String price1="1";
         Intent intent=new Intent(this,CurrencyConverter.class);
         intent.putExtra("crySymbol1",crySymbol);
@@ -408,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Lis
     }
     Character func(char character){
         if (character=='1'||character=='2'||character=='3'||character=='4'||character=='5'||
-                character==6||character==7||character=='8'||character=='9'||character=='.'||character=='0'){
+                character=='6'||character=='7'||character=='8'||character=='9'||character=='.'||character=='0'){
             return character;
         }
         return null;
