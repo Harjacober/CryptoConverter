@@ -31,6 +31,8 @@ public class CurrencyConverter extends AppCompatActivity {
     private EditText cryptoCurrencyValue;
     private boolean keppTextChenged=true;
     DecimalFormat decimalFormat;
+    ImageView cryptoCurrencyLogo;
+    ImageView currencyLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,12 @@ public class CurrencyConverter extends AppCompatActivity {
         cryptoCurrencyValue=(EditText) findViewById(R.id.crypto_currency_value);
         currencyValue=(EditText) findViewById(R.id.currency_value);
         result=(TextView) findViewById(R.id.result);
-        ImageView cryptoCurrencyLogo = (ImageView) findViewById(R.id.crypto_currency_logo);
-        ImageView currencyLogo = (ImageView) findViewById(R.id.currency_logo);
+         cryptoCurrencyLogo = (ImageView) findViewById(R.id.crypto_currency_logo);
+         currencyLogo = (ImageView) findViewById(R.id.currency_logo);
 
         getIntentPassed();
         setIntentsPassed();
+        setCryptoCurrencyLogo();
         processConversion();
         setTitle(cryptoCurrencySymnol+" - "+currencySymbol+" Converter");
         decimalFormat=new DecimalFormat(".###");
@@ -158,5 +161,77 @@ public class CurrencyConverter extends AppCompatActivity {
             NavUtils.navigateUpFromSameTask(this);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setCryptoCurrencyLogo() {
+        if (cryptoCurrencySymnol.equals("BTC")){
+            cryptoCurrencyLogo.setImageResource(R.drawable.bitcoin);
+        }
+        else if (cryptoCurrencySymnol.equals("ETH")){
+            cryptoCurrencyLogo.setImageResource(R.drawable.eth);
+        }
+        switch (currencySymbol){
+            case "NGN":
+                currencyLogo.setImageResource(R.drawable.ngn);
+                break;
+            case "AUD":
+                currencyLogo.setImageResource(R.drawable.aud);
+                break;
+            case "AZN":
+                currencyLogo.setImageResource(R.drawable.azn);
+                break;
+            case "BHD":
+                currencyLogo.setImageResource(R.drawable.bhd);
+                break;
+            case "BSD":
+                currencyLogo.setImageResource(R.drawable.bsd);
+                break;
+            case "CAD":
+                currencyLogo.setImageResource(R.drawable.cad);
+                break;
+            case "CHF":
+                currencyLogo.setImageResource(R.drawable.chf);
+                break;
+            case "CNY":
+                currencyLogo.setImageResource(R.drawable.cny);
+                break;
+            case "EUR":
+                currencyLogo.setImageResource(R.drawable.eur);
+                break;
+            case "GPB":
+                currencyLogo.setImageResource(R.drawable.gpb);
+                break;
+            case "HKD":
+                currencyLogo.setImageResource(R.drawable.hkd);
+                break;
+            case "ILS":
+                currencyLogo.setImageResource(R.drawable.ils);
+                break;
+            case "JMD":
+                currencyLogo.setImageResource(R.drawable.jmd);
+                break;
+            case "JOD":
+                currencyLogo.setImageResource(R.drawable.jod);
+                break;
+            case "JPY":
+                currencyLogo.setImageResource(R.drawable.jpy);
+                break;
+            case "KRW":
+                currencyLogo.setImageResource(R.drawable.krw);
+                break;
+            case "USD":
+                currencyLogo.setImageResource(R.drawable.usd);
+                break;
+            case "VND":
+                currencyLogo.setImageResource(R.drawable.vnd);
+                break;
+            case "YER":
+                currencyLogo.setImageResource(R.drawable.yer);
+                break;
+            case "ZMW":
+                currencyLogo.setImageResource(R.drawable.zmw);
+                break;
+        }
+
     }
 }
